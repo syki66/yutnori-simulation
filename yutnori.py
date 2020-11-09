@@ -1,4 +1,6 @@
-# 윷놀이 게임기, 통계적 확률 계산기
+# 윷놀이 기계 확률 계산하기
+
+# 자바스크립트로 변환하기
 
 # 둥근면 : 1, 평평한면 : 0
 # 둥근면 : 40% , 평평한면 : 60% (평평한면이 위로 나올 확률이 높음)
@@ -10,6 +12,7 @@
 # 모 : 0.0256 (2.56 %)
 
 import random
+import math
 
 def throwYuts():
     yuts = []
@@ -40,7 +43,13 @@ def playYutnori(destination, play_count):
                 winning_count += 1
                 break
 
-    return winning_count, play_count
+    return play_count, winning_count
 
-
-print ( playYutnori(10, 1000) )
+for i in range(1, 11):
+    try:
+        try_count, success_count = playYutnori(i, 1000000)
+        percentage = round(success_count / try_count * 100, 4)
+        expectation = math.ceil(100 / percentage) * 1000
+        print(f'{i}번 -> 시도 : {try_count}, 성공 : {success_count}, 확률 : {percentage}%, 1개당 뽑기 금액 : {expectation}원')
+    except ZeroDivisionError:
+        print(f'{i}번 -> 시도 : {try_count}, 성공 : 0, 확률 : 0%')
